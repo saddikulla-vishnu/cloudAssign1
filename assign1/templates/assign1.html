@@ -1,0 +1,5 @@
+{% if not request.user.is_authenticated %}
+       Click here to <a href='{% url "assign1:sign-up" %}'>Sign Up</a> | <a href='{% url "assign1:login" %}'>Login</a>
+{% else %}
+       Click here to go to your <a href='{% url "assign1:dashboard" %}'>Dashboard</a>.
+{% endif %}

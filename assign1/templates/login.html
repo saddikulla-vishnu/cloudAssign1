@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Login</title>
+{% endblock head %}
+
+
+{% block content %}
+    <style>
+        .errorlist.nonfield{
+            color: red;
+        }
+    </style>
+    <form method="post" enctype="multipart/form-data">
+        {{ form.non_field_errors }}
+    {% csrf_token %}
+    {% for field in form %}
+        <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% comment %}
+        {% if field.help_text %}
+            <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% endcomment %}
+        {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+        {% endfor %}
+        </p>
+    {% endfor %}
+    <button class="btn btn-primary" type="submit">Login</button>
+    <p>Don't have an account yet? <a href='{% url "assign1:sign-up" %}'>Sign Up</a></p>
+</form>
+{% endblock %}

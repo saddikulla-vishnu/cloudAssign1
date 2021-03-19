@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Dashboard</title>
+{% endblock head %}
+
+{% block content %}
+<div class="container-fluid">
+<p><a class="btn btn-primary" href='{% url "assign1:logout" %}'>Logout</a></p>
+<p>Welcome {{ request.user.first_name|title }}</p>
+<p>Below are your profile Details:</p>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Field</th>
+        <th scope="col">Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Username</td>
+        <td>{{ request.user.username }}</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>First Name</td>
+        <td>{{ request.user.first_name|title }}</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Last Name</td>
+        <td>{{ request.user.last_name|title }}</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Email Address</td>
+        <td>{{ request.user.email }}</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>PDF download link</td>
+        <td><a href="{{ request.user.profile.user_registration_file.url }}" target="_blank" download>{{ request.user.profile.get_user_registration_file_name }}</a></td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Word Count of the PDF</td>
+        <td>{{ word_cnt }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- <ul>
+    <li>Username: <b>{{ request.user.username }}</b></li>
+    <li>First Name: {{ request.user.first_name }}</li>
+    <li>Last Name: {{ request.user.last_name }}</li>
+    <li>Email Address: {{ request.user.email }}</li>
+    <li>This is the file you have uploaded while signing up: <a href="{{ request.user.profile.user_registration_file.url }}" target="_blank">{{ request.user.profile.user_registration_file.url }}</a></li>
+    <li>No. of words in the above pdf is: {{ word_cnt }}</li>
+</ul> -->
+{% endblock content %}
