@@ -11,19 +11,23 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import environ
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+env = environ.Env()
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'h$g^9b0d6i-_mjfmheeyj3o4q8x&l-*h^$gokb@hi9_l6(=glf'
+SECRET_KEY = env("SECRET_KEY", default='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+#  SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+#  DEBUG = False
+DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = ['*']
 
@@ -121,7 +125,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/static/media/'
 # Start: User Custom Settings
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
 APPEND_SLASH = True
 LOGIN_URL = 'assign1:login'
 LOGIN_REDIRECT_URL = 'assign1:assign1-index'
