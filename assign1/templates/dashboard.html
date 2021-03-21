@@ -1,12 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'assign1_index.html' %}
 
 {% block head %}
-<title>Dashboard</title>
+<title>Assignnent 1 Dashboard</title>
 {% endblock head %}
 
 {% block content %}
 <div class="container-fluid">
-<p><a class="btn btn-primary" href='{% url "assign1:logout" %}'>Logout</a></p>
+{{ block.super }}
 <p>Welcome {{ request.user.first_name|title }}</p>
 <p>Below are your profile Details:</p>
 <table class="table table-striped">

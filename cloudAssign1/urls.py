@@ -22,6 +22,7 @@ from . import views
 
 urlpatterns = [
     path('assignment1/', include('assign1.urls')),
+    path('midterm/', include('midterm.urls')),
     path('admin/', admin.site.urls),
     path('', views.IndexView.as_view(), name='index'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

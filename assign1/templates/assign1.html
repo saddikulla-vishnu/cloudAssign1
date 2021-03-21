@@ -1,5 +1,5 @@
-{% if not request.user.is_authenticated %}
-       Click here to <a href='{% url "assign1:sign-up" %}'>Sign Up</a> | <a href='{% url "assign1:login" %}'>Login</a>
-{% else %}
-       Click here to go to your <a href='{% url "assign1:dashboard" %}'>Dashboard</a>.
+{% if request.user.is_authenticated %}
+    {% comment %} <div class="container-fluid p-2 btn-group"> {% endcomment %}
+        <a href='{% url "assign1:assign1-index" %}' class="btn btn-secondary">Assignent 1 Home</a>
+    {% comment %} </div> {% endcomment %}
 {% endif %}

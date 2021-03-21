@@ -1,0 +1,136 @@
+{% extends 'midterm_index.html' %}
+{% load assign1_tags %}
+
+{% block head %}
+<title>Midterm Dashboard</title>
+{% endblock head %}
+
+{% block content %}
+<div class="container-fluid">
+    {{ block.super }}
+    {% comment %} <form method="post" accept-charset="utf-8" enctype='multipart/form-data'> {% endcomment %}
+        {% comment %} {% csrf_token %} {% endcomment %}
+        {% comment %} {% for field in upload_form %} {% endcomment %}
+        {% comment %} <div class="form-group"> {% endcomment %}
+            {% comment %} {{ field.label }}{{ field }} {% endcomment %}
+        {% comment %} </div> {% endcomment %}
+        {% comment %} {% endfor %} {% endcomment %}
+        {% comment %} <button type="submit" class="btn btn-primary">Upload</button> {% endcomment %}
+    {% comment %} </form> {% endcomment %}
+
+    <form class="col-md-6">
+        {% for field in search_form %}
+        <div class="form-group">
+            {{ field.label }}{{ field }}
+        </div>
+        {% endfor %}
+        {% comment %} <div class="form-group"> {% endcomment %}
+            {% comment %} <label for="id_hshd_num">Household Number</label> {% endcomment %}
+            {% comment %} <input type="text" name="hshd_num" class="form-control" id="id_hshd_num" placeholder="Household Number" value="{{ request.GET.hshd_num }}"> {% endcomment %}
+        {% comment %} </div> {% endcomment %}
+        {% comment %} <div class="form-group"> {% endcomment %}
+        {% comment %} <select class="form-control" name="order_by"> {% endcomment %}
+            {% comment %} <option selected>Sort By</option> {% endcomment %}
+            {% comment %} <option value="1">Household Number</option> {% endcomment %}
+            {% comment %} <option value="2">Basket Number</option> {% endcomment %}
+            {% comment %} <option value="3">Date</option> {% endcomment %}
+            {% comment %} <option value="4">Product Number</option> {% endcomment %}
+            {% comment %} <option value="5">Department</option> {% endcomment %}
+            {% comment %} <option value="6">Commodity</option> {% endcomment %}
+        {% comment %} </select> {% endcomment %}
+        {% comment %} </div> {% endcomment %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a type="reset" class="btn btn-primary" href="{% url 'midterm:dashboard' %}">Reset</a>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Household Number</th>
+                <th scope="col">Basket Number</th>
+                <th scope="col">Date</th>
+                <th scope="col">Product Number</th>
+                <th scope="col">Department</th>
+                <th scope="col">Commodity</th>
+                <th scope="col">Spend</th>
+                <th scope="col">Units</th>
+                <th scope="col">Store Region</th>
+                <th scope="col">Week Number</th>
+                <th scope="col">Year</th>
+                <th scope="col">Loyalty Flag</th>
+                <th scope="col">Age Range</th>
+                <th scope="col">Marital Status</th>
+                <th scope="col">Income Range</th>
+                <th scope="col">Homeowner Desc</th>
+                <th scope="col">Household Composition</th>
+                <th scope="col">Household Size</th>
+                <th scope="col">Children</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.hshd_num }}</td>
+                {% comment %} <td>{{ transaction.id }}</td> {% endcomment %}
+                <td>{{ transaction.basket_num }}</td>
+                <td>{{ transaction.date }}</td>
+                <td>{{ transaction.product_num }}</td>
+                <td>{{ transaction.product_num.department }}</td>
+                <td>{{ transaction.product_num.commodity }}</td>
+                <td>{{ transaction.spend }}</td>
+                <td>{{ transaction.units }}</td>
+                <td>{{ transaction.store_region }}</td>
+                <td>{{ transaction.week_num }}</td>
+                <td>{{ transaction.year }}</td>
+                <td>{{ transaction.hshd_num.loyalty_flag }}</td>
+                <td>{{ transaction.hshd_num.age_range }}</td>
+                <td>{{ transaction.hshd_num.marital_status }}</td>
+                <td>{{ transaction.hshd_num.income_range }}</td>
+                <td>{{ transaction.hshd_num.homeowner_desc }}</td>
+                <td>{{ transaction.hshd_num.hshd_composition }}</td>
+                <td>{{ transaction.hshd_num.hshd_size }}</td>
+                <td>{{ transaction.hshd_num.children }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% if is_paginated %}
+    <nav aria-label="Transactions Page Nav">
+    <ul class="pagination">
+        {% if page_obj.number == 1 %}
+            <li class="page-item disabled"><span class="page-link">⇤</span></li>
+        {% else %}
+            <li><a class="page-link" href="?{% url_replace request 'page' 1 %}">⇤</a></li>
+        {% endif %}
+        {% if page_obj.has_previous %}
+            <li><a class="page-link" href="?{% url_replace request 'page' page_obj.previous_page_number %}">&laquo;</a></li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+        {% endif %}
+
+        {% proper_paginate paginator page_obj.number 4 as custom_paginator %}
+        {% for i in custom_paginator %}
+            {% if page_obj.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+            {% else %}
+                <li><a class="page-link" href="?{% url_replace request 'page' i %}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li><a class="page-link" href="?{% url_replace request 'page' page_obj.next_page_number %}">&raquo;</a></li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+        {% endif %}
+        {% if page_obj.number == paginator.num_pages %}
+            <li class="page-item disabled"><span class="page-link">⇥</span></li>
+        {% else %}
+            <li><a class="page-link" href="?{% url_replace request 'page' paginator.num_pages %}">⇥</a></li>
+        {% endif %}
+    </ul>
+    </nav>
+{% endif %}
+
+</div>
+{% endblock content %}

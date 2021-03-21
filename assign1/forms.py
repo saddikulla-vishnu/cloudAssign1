@@ -12,7 +12,7 @@ class SignUpForm(UserCreationForm):
         fields = (
             'username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'user_registration_file',
             )
-        
+
     def clean_user_registration_file(self):
         file = self.cleaned_data.get("user_registration_file", False)
         if not file:

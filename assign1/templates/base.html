@@ -10,6 +10,11 @@
 <body>
     <div class='container-fluid'>
         <a href="/" class="btn btn-primary col-md-1">Home</a>
+        {% if not request.user.is_authenticated %}
+            Click here to <a href='{% url "assign1:sign-up" %}'>Sign Up</a> | <a href='{% url "assign1:login" %}'>Login</a>
+        {% else %}
+            <a class="btn btn-primary" href='{% url "assign1:logout" %}'>Logout</a>
+        {% endif %}
     </div>
     <!-- Hello, World.... -->
     {% block content %}

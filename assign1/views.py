@@ -60,7 +60,7 @@ class LoginView(FormView):
     #     return ctx
 
     def form_invalid(self, form):
-        print(form.errors)
+        #  print(form.errors)
         return super().form_invalid(form)
 
     def form_valid(self, form):
