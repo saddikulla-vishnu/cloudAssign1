@@ -17,7 +17,6 @@ from .forms import LoginForm, SignUpForm
 class SignUpView(FormView):
     template_name = 'signup.html'
     form_class = SignUpForm
-    #  success_url = reverse_lazy('index')
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
@@ -28,11 +27,8 @@ class SignUpView(FormView):
 
     def form_valid(self, form):
         user = form.save()
-        user.refresh_from_db()  # load the profile instance created by the signal
-        # user.profile.birth_date = form.cleaned_data.get('birth_date')
+        user.refresh_from_db()
         user.profile.user_registration_file = form.cleaned_data.get('user_registration_file')
-        # import ipdb ; ipdb.set_trace()
-        # print(form.cleaned_data)
         user.save()
         raw_password = form.cleaned_data.get('password1')
         user = authenticate(username=user.username, password=raw_password)
@@ -52,7 +48,6 @@ class SignUpView(FormView):
 class LoginView(FormView):
     template_name = 'login.html'
     form_class = LoginForm
-    #  success_url = reverse_lazy('index') # reverse_lazy('assign1:dashboard')
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
@@ -66,11 +61,6 @@ class LoginView(FormView):
             return "%s" % (next_url)
         else:
             return reverse_lazy('index')
-
-    # def get_context_data(self, **kwargs):
-    #     ctx = super().get_context_data(**kwargs)
-    #     # ctx['for']
-    #     return ctx
 
     def form_invalid(self, form):
         #  print(form.errors)
@@ -89,18 +79,12 @@ class DashboardView(TemplateView):
     template_name = 'dashboard.html'
 
     def get(self, request, *args, **kwargs):
-        # profile = request.user.profile
         file = request.user.profile.user_registration_file
-        # print(profile.get_user_registration_file_name())
-        # import ipdb ; ipdb.set_trace()
-        text = textract.process(file.path).decode('utf-8') # http://www.africau.edu/images/default/sample.pdf
-        # text = textract.process('sample.pdf') # http://www.africau.edu/images/default/sample.pdf
-        # print(text)
-        words = re.findall(r"[^\W_]+", text, re.MULTILINE) # regex demo and explanation - https://regex101.com/r/U7WMSA/1
+        text = textract.process(file.path).decode('utf-8')
+        words = re.findall(r"[^\W_]+", text, re.MULTILINE)
         word_cnt = len(words)
         ctx = {
             'word_cnt': word_cnt,
-            # 'profile': profile
         }
         return render(request=request, template_name='dashboard.html', context=ctx)
 

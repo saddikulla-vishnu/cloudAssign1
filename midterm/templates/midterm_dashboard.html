@@ -8,37 +8,12 @@
 {% block content %}
 <div class="container-fluid">
     {{ block.super }}
-    {% comment %} <form method="post" accept-charset="utf-8" enctype='multipart/form-data'> {% endcomment %}
-        {% comment %} {% csrf_token %} {% endcomment %}
-        {% comment %} {% for field in upload_form %} {% endcomment %}
-        {% comment %} <div class="form-group"> {% endcomment %}
-            {% comment %} {{ field.label }}{{ field }} {% endcomment %}
-        {% comment %} </div> {% endcomment %}
-        {% comment %} {% endfor %} {% endcomment %}
-        {% comment %} <button type="submit" class="btn btn-primary">Upload</button> {% endcomment %}
-    {% comment %} </form> {% endcomment %}
-
     <form class="col-md-6">
         {% for field in search_form %}
         <div class="form-group">
             {{ field.label }}{{ field }}
         </div>
         {% endfor %}
-        {% comment %} <div class="form-group"> {% endcomment %}
-            {% comment %} <label for="id_hshd_num">Household Number</label> {% endcomment %}
-            {% comment %} <input type="text" name="hshd_num" class="form-control" id="id_hshd_num" placeholder="Household Number" value="{{ request.GET.hshd_num }}"> {% endcomment %}
-        {% comment %} </div> {% endcomment %}
-        {% comment %} <div class="form-group"> {% endcomment %}
-        {% comment %} <select class="form-control" name="order_by"> {% endcomment %}
-            {% comment %} <option selected>Sort By</option> {% endcomment %}
-            {% comment %} <option value="1">Household Number</option> {% endcomment %}
-            {% comment %} <option value="2">Basket Number</option> {% endcomment %}
-            {% comment %} <option value="3">Date</option> {% endcomment %}
-            {% comment %} <option value="4">Product Number</option> {% endcomment %}
-            {% comment %} <option value="5">Department</option> {% endcomment %}
-            {% comment %} <option value="6">Commodity</option> {% endcomment %}
-        {% comment %} </select> {% endcomment %}
-        {% comment %} </div> {% endcomment %}
         <button type="submit" class="btn btn-primary">Submit</button>
         <a type="reset" class="btn btn-primary" href="{% url 'midterm:dashboard' %}">Reset</a>
     </form>

@@ -6,9 +6,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.validators import FileExtensionValidator
 
-# def images_path():
-#     return os.path.join(settings.LOCAL_FILE_DIR, 'images')
-
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

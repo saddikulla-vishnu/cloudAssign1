@@ -3,18 +3,11 @@
 {% block content %}
 {{ block.super }}
 <style type="text/css" media="screen">
-{% comment %} canvas.spend-chart{ {% endcomment %}
-    {% comment %} position: relative; {% endcomment %}
-    {% comment %} height:50vh; {% endcomment %}
-    {% comment %} width:45vw; {% endcomment %}
-{% comment %} } {% endcomment %}
 div.chart-div{
     display: inline-block;
     position: relative;
     min-height: 48vh;
     min-width: 48vw;
-    {% comment %} max-width: 100%; {% endcomment %}
-    {% comment %} min-height: 100%; {% endcomment %}
 }
 </style>
 <div id="container-fluid">
@@ -25,11 +18,6 @@ div.chart-div{
     <div class="chart-div"> <canvas id="id_spend_by_marital_incm" class="spend-chart"></canvas> </div>
     <div class="chart-div"> <canvas id="id_spend_by_hshd_size" class="spend-chart"></canvas> </div>
     <div class="chart-div"> <canvas id="id_spend_by_chldrn_hshd_size" class="spend-chart"></canvas> </div>
-    {% comment %} <div class="chart-div"> <canvas id="" class="spend-chart"></canvas> </div> {% endcomment %}
-    {% comment %} <div class="chart-div"> <canvas id="" class="spend-chart"></canvas> </div> {% endcomment %}
-    {% comment %} <div class="chart-div"> <canvas id="" class="spend-chart"></canvas> </div> {% endcomment %}
-    {% comment %} <div class="chart-div"> <canvas id="" class="spend-chart"></canvas> </div> {% endcomment %}
-    {% comment %} <div class="chart-div"> <canvas id="" class="spend-chart"></canvas> </div> {% endcomment %}
 </div>
 {% endblock content %}
 

@@ -12,8 +12,6 @@ class Household(models.Model):
     hshd_composition = models.CharField(max_length=32, null=True, blank=True)
     hshd_size = models.CharField(max_length=32, null=True, blank=True)
     children = models.CharField(max_length=32, null=True, blank=True)
-    #  uid = models.ForeignKey(User, db_column='uid', db_constraint=False, on_delete=models.DO_NOTHING, null=True, blank=True)
-    #  upload_date_time = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         db_table = 'households'
@@ -32,8 +30,6 @@ class Transaction(models.Model):
     store_region = models.CharField(max_length=32, null=True, blank=True)
     week_num = models.PositiveIntegerField(null=True, blank=True)
     year = models.PositiveIntegerField(null=True, blank=True)
-    #  uid = models.ForeignKey(User, db_column='uid', db_constraint=False, on_delete=models.DO_NOTHING)
-    #  upload_date_time = models.DateTimeField(null=True, blank=True)
 
 
     class Meta:
@@ -57,8 +53,6 @@ class Product(models.Model):
     commodity = models.CharField(max_length=32, null=True, blank=True)
     brand_type = models.CharField(max_length=32, null=True, blank=True)
     natural_organic_flag = models.CharField(max_length=32, null=True, blank=True)
-    #  uid = models.ForeignKey(User, db_column='uid', db_constraint=False, on_delete=models.DO_NOTHING)
-    #  upload_date_time = models.DateTimeField(null=True, blank=True)
 
 
     class Meta:
