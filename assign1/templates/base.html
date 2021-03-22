@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <div class='container-fluid'>
         <a href="/" class="btn btn-primary col-md-1">Home</a>
         {% if not request.user.is_authenticated %}
@@ -19,5 +20,8 @@
     <!-- Hello, World.... -->
     {% block content %}
     {% endblock content %}
+
+    {% block js_block %}
+    {% endblock js_block %}
 </body>
 </html>
