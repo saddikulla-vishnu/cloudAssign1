@@ -1,11 +1,5 @@
 ######################     Release Notes     ######################
 SQL Queries:
-load data local infile '/media/vishnu/VISHNU/Study/New/Cloud Computing/Assignments/Midterm/8451_The_Complete_Journey_2_Sample/400_households.csv' replace into table households fields terminated by ',' enclosed by '"' lines terminated by '\n' ignore 1 lines (hshd_num, loyalty_flag, age_range, marital_status, income_range, homeowner_desc, hshd_composition, hshd_size, children);
-
-load data local infile '/media/vishnu/VISHNU/Study/New/Cloud Computing/Assignments/Midterm/8451_The_Complete_Journey_2_Sample/400_transactions.csv' replace into table transactions fields terminated by ',' enclosed by '"' lines terminated by '\n' ignore 1 lines (hshd_num, basket_num, date, product_num, spend, units, store_region, week_num, year);
-
-load data local infile '/media/vishnu/VISHNU/Study/New/Cloud Computing/Assignments/Midterm/8451_The_Complete_Journey_2_Sample/400_products.csv' replace into table products fields terminated by ',' enclosed by '"' lines terminated by '\n' ignore 1 lines (product_num, department, commodity, brand_type, natural_organic_flag);
-
 CREATE TABLE `households` (
   `hshd_num` int(10) UNSIGNED NOT NULL,
   `loyalty_flag` varchar(4) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -56,3 +50,9 @@ ALTER TABLE `transactions`
 
 ALTER TABLE `transactions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+load data local infile '/home/saddikulla/8451_The_Complete_Journey_2_Sample_Small/400_households.csv' replace into table households fields terminated by ',' enclosed by '"' lines terminated by '\n' ignore 1 lines (hshd_num, loyalty_flag, age_range, marital_status, income_range, homeowner_desc, hshd_composition, hshd_size, children);
+
+load data local infile '/home/saddikulla/8451_The_Complete_Journey_2_Sample_Small/400_transactions.csv' replace into table transactions fields terminated by ',' enclosed by '"' lines terminated by '\n' ignore 1 lines (hshd_num, basket_num, date, product_num, spend, units, store_region, week_num, year);
+
+load data local infile '/home/saddikulla/8451_The_Complete_Journey_2_Sample_Small/400_products.csv' replace into table products fields terminated by ',' enclosed by '"' lines terminated by '\n' ignore 1 lines (product_num, department, commodity, brand_type, natural_organic_flag);
