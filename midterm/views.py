@@ -13,6 +13,7 @@ from .models import Transaction
 from .forms import SearchForm, UploadForm
 
 # Create your views here.
+@method_decorator(login_required, name='dispatch')
 class DashboardView(ListView):
     template_name = 'midterm_dashboard.html'
     model = Transaction
@@ -85,16 +86,20 @@ class DashboardView(ListView):
             #  print(tr.hshd_num_id)
         #  return super().get(request, *args, **kwargs)
 
+@method_decorator(login_required, name='dispatch')
 class MidtermIndexView(TemplateView):
     template_name = 'midterm_index.html'
 
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class UploadDatasetView(FormView):
     form_class = UploadForm
     template_name = 'midterm_upload_dataset.html'
     success_url = reverse_lazy('midterm:dashboard')
 
 
+@method_decorator(login_required, name='dispatch')
 class ChartsView(TemplateView):
     template_name = 'midterm_charts.html'
     queryset = Transaction.objects.all()

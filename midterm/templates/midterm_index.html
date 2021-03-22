@@ -3,8 +3,8 @@
 {% block content %}
     <div class="container-fluid p-2">
         {% include "midterm.html" %}
-        <a href='{% url "midterm:dashboard" %}' class="btn btn-secondary">Midterm Dashboard</a>
+        <a href='{% url "midterm:charts" %}' class="btn btn-secondary">Charts Dashboard</a>
+        <a href='{% url "midterm:dashboard" %}' class="btn btn-secondary">Data Dashboard</a>
         <a href='{% url "midterm:upload-dataset" %}' class="btn btn-secondary">Upload a New Dataset</a>
-        <a href='{% url "midterm:charts" %}' class="btn btn-secondary">Charts</a>
     </div>
 {% endblock content %}

@@ -17,7 +17,7 @@ from .forms import LoginForm, SignUpForm
 class SignUpView(FormView):
     template_name = 'signup.html'
     form_class = SignUpForm
-    success_url = reverse_lazy('assign1:dashboard')
+    #  success_url = reverse_lazy('index')
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
@@ -42,17 +42,30 @@ class SignUpView(FormView):
         login(self.request, user)
         return super().form_valid(form)
 
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        if next_url:
+            return "%s" % (next_url)
+        else:
+            return reverse_lazy('index')
 
 class LoginView(FormView):
     template_name = 'login.html'
     form_class = LoginForm
-    success_url = reverse_lazy('assign1:dashboard')
+    #  success_url = reverse_lazy('index') # reverse_lazy('assign1:dashboard')
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
         if user and user.is_authenticated:
             return redirect('assign1:dashboard')
         return super().get(request, *args, **kwargs)
+
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        if next_url:
+            return "%s" % (next_url)
+        else:
+            return reverse_lazy('index')
 
     # def get_context_data(self, **kwargs):
     #     ctx = super().get_context_data(**kwargs)
@@ -71,10 +84,10 @@ class LoginView(FormView):
         login(self.request, user)
         return super().form_valid(form)
 
+@method_decorator(login_required, name='dispatch')
 class DashboardView(TemplateView):
     template_name = 'dashboard.html'
 
-    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         # profile = request.user.profile
         file = request.user.profile.user_registration_file
@@ -91,5 +104,6 @@ class DashboardView(TemplateView):
         }
         return render(request=request, template_name='dashboard.html', context=ctx)
 
+@method_decorator(login_required, name='dispatch')
 class Assign1IndexView(TemplateView):
     template_name = 'assign1_index.html'
