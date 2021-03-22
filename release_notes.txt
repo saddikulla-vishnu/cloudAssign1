@@ -1,0 +1,58 @@
+######################     Release Notes     ######################
+SQL Queries:
+load data local infile '/media/vishnu/VISHNU/Study/New/Cloud Computing/Assignments/Midterm/8451_The_Complete_Journey_2_Sample/400_households.csv' replace into table households fields terminated by ',' enclosed by '"' lines terminated by '\n' ignore 1 lines (hshd_num, loyalty_flag, age_range, marital_status, income_range, homeowner_desc, hshd_composition, hshd_size, children);
+
+load data local infile '/media/vishnu/VISHNU/Study/New/Cloud Computing/Assignments/Midterm/8451_The_Complete_Journey_2_Sample/400_transactions.csv' replace into table transactions fields terminated by ',' enclosed by '"' lines terminated by '\n' ignore 1 lines (hshd_num, basket_num, date, product_num, spend, units, store_region, week_num, year);
+
+load data local infile '/media/vishnu/VISHNU/Study/New/Cloud Computing/Assignments/Midterm/8451_The_Complete_Journey_2_Sample/400_products.csv' replace into table products fields terminated by ',' enclosed by '"' lines terminated by '\n' ignore 1 lines (product_num, department, commodity, brand_type, natural_organic_flag);
+
+CREATE TABLE `households` (
+  `hshd_num` int(10) UNSIGNED NOT NULL,
+  `loyalty_flag` varchar(4) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `age_range` varchar(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `marital_status` varchar(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `income_range` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `homeowner_desc` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hshd_composition` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hshd_size` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `children` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+ALTER TABLE `households`
+  ADD PRIMARY KEY (`hshd_num`);
+
+CREATE TABLE `products` (
+  `product_num` int(10) UNSIGNED NOT NULL,
+  `department` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `commodity` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `brand_type` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `natural_organic_flag` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`product_num`),
+  ADD KEY `prdct_dprt` (`department`),
+  ADD KEY `prdct_cmdty` (`commodity`),
+  ADD KEY `prdct_p_d_c` (`product_num`,`department`,`commodity`) USING BTREE;
+
+CREATE TABLE `transactions` (
+  `id` int(11) NOT NULL,
+  `basket_num` int(10) UNSIGNED DEFAULT NULL,
+  `date` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `spend` double DEFAULT NULL,
+  `units` int(11) DEFAULT NULL,
+  `store_region` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `week_num` int(10) UNSIGNED DEFAULT NULL,
+  `year` int(10) UNSIGNED DEFAULT NULL,
+  `hshd_num` int(11) NOT NULL,
+  `product_num` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE `transactions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `transactions_hshd_num_27bed381` (`hshd_num`),
+  ADD KEY `transactions_product_num_2a3f5a83` (`product_num`),
+  ADD KEY `trns_bskt_num` (`basket_num`),
+  ADD KEY `trns_dt` (`date`),
+  ADD KEY `trns_srt_h_b_d_p` (`hshd_num`,`basket_num`,`date`,`product_num`);
+
+ALTER TABLE `transactions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
