@@ -53,7 +53,6 @@ class DashboardView(ListView):
         self.get_queryset()
         ctx = super().get_context_data(**kwargs)
         ctx['search_form'] = SearchForm(self.request.GET)
-        ctx['upload_form'] = UploadForm()
         return ctx
 
 
@@ -67,7 +66,11 @@ class MidtermIndexView(TemplateView):
 class UploadDatasetView(FormView):
     form_class = UploadForm
     template_name = 'midterm_upload_dataset.html'
-    success_url = reverse_lazy('midterm:dashboard')
+    success_url = reverse_lazy('midterm:charts')
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 
 @method_decorator(login_required, name='dispatch')
