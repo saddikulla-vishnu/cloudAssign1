@@ -72,7 +72,7 @@ class UploadForm(forms.Form):
         if transactions_file:
             transactions_file = transactions_file.read().decode('utf-8').splitlines()
             transaction_data = [{TRANSACTION_COLUMN_MAPPING.get(k.strip()): v.strip() for k, v in row.items()} for row in csv.DictReader(transactions_file, skipinitialspace=True)]
-            batch_size = 10000
+            batch_size = 100000
             objs = (Transaction(**_trnsctn) for _trnsctn in transaction_data)
             while True:
                 batch = list(islice(objs, batch_size))
@@ -84,7 +84,7 @@ class UploadForm(forms.Form):
         if hshds_file:
             hshds_file = hshds_file.read().decode('utf-8').splitlines()
             hshd_data = [{HSHD_COLUMN_MAPPING.get(k.strip()): v.strip() for k, v in row.items()} for row in csv.DictReader(hshds_file, skipinitialspace=True)]
-            batch_size = 10000
+            batch_size = 100000
             objs = (Household(**_hshd) for _hshd in hshd_data)
             while True:
                 batch = list(islice(objs, batch_size))
@@ -96,7 +96,7 @@ class UploadForm(forms.Form):
         if products_file:
             products_file = products_file.read().decode('utf-8').splitlines()
             product_data = [{PRODUCT_COLUMN_MAPPING.get(k.strip()): v.strip() for k, v in row.items()} for row in csv.DictReader(products_file, skipinitialspace=True)]
-            batch_size = 10000
+            batch_size = 100000
             objs = (Product(**_product) for _product in product_data)
             while True:
                 batch = list(islice(objs, batch_size))
