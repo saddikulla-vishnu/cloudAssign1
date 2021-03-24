@@ -85,21 +85,33 @@ class UploadForm(forms.Form):
             hshds_file = hshds_file.read().decode('utf-8').splitlines()
             hshd_data = [{HSHD_COLUMN_MAPPING.get(k.strip()): v.strip() for k, v in row.items()} for row in csv.DictReader(hshds_file, skipinitialspace=True)]
             batch_size = 100000
+
+            # Start: Filter out already existing housholds
+            existing_hshd_nums = set(Household.objects.values_list('hshd_num', flat=True))
+            hshd_data = [_hshd for _hshd in hshd_data if int(_hshd['hshd_num']) not in existing_hshd_nums]
+            # End: Filter out already existing housholds
+
             objs = (Household(**_hshd) for _hshd in hshd_data)
             while True:
                 batch = list(islice(objs, batch_size))
                 if not batch:
                     break
-                Household.objects.bulk_create(batch, batch_size, ignore_conflicts=True)
+                Household.objects.bulk_create(batch, batch_size)
 
         products_file = self.cleaned_data.get('products_file')
         if products_file:
             products_file = products_file.read().decode('utf-8').splitlines()
             product_data = [{PRODUCT_COLUMN_MAPPING.get(k.strip()): v.strip() for k, v in row.items()} for row in csv.DictReader(products_file, skipinitialspace=True)]
             batch_size = 100000
+
+            # Start: Filter out already existing products
+            existing_product_nums = set(Product.objects.values_list('product_num', flat=True))
+            product_data = [_prdct for _prdct in product_data if int(_prdct['product_num']) not in existing_product_nums]
+            # End: Filter out already existing products
+
             objs = (Product(**_product) for _product in product_data)
             while True:
                 batch = list(islice(objs, batch_size))
                 if not batch:
                     break
-                Product.objects.bulk_create(batch, batch_size, ignore_conflicts=True)
+                Product.objects.bulk_create(batch, batch_size)

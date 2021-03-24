@@ -1,4 +1,4 @@
-Django==2.2.0
+Django==2.1.1
 textract==1.6.3
 django-environ==0.4.5
 python-dotenv==0.15.0
