@@ -378,7 +378,7 @@ class ChartsView(TemplateView):
             'options': {
                 'title': {
                     'display': True,
-                    'text': 'SPEND by Year and Store Region'
+                    'text': 'SPEND by Year and Loyalty'
                 },
             },
             'canvas_id': 'id_spend_by_year_and_yr_lylt'
