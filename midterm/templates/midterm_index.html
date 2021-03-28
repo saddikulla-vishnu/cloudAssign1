@@ -2,9 +2,14 @@
 
 {% block content %}
     <div class="container-fluid p-2">
-        {% include "midterm.html" %}
-        <a href='{% url "midterm:charts" %}' class="btn btn-secondary">Charts Dashboard</a>
-        <a href='{% url "midterm:dashboard" %}?hshd_num=10' class="btn btn-secondary">Data Dashboard</a>
-        <a href='{% url "midterm:upload-dataset" %}' class="btn btn-secondary">Upload a New Dataset</a>
+        <div class="card p-2">
+            <div class="card-body">
+                <h5 class="card-title">Welcome to Retail Application Dashboard</h5>
+                {% include "midterm.html" %}
+                <a href='{% url "midterm:charts" %}' class="btn btn-primary">Charts Dashboard</a>
+                <a href='{% url "midterm:dashboard" %}?hshd_num=10' class="btn btn-primary">Data Dashboard</a>
+                <a href='{% url "midterm:upload-dataset" %}' class="btn btn-primary">Upload a New Dataset</a>
+            </div>
+        </div>
     </div>
 {% endblock content %}
