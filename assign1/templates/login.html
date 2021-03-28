@@ -16,7 +16,7 @@
     {{ form.non_field_errors }}
     {% csrf_token %}
     {% for field in form %}
-        <div class="form-floating col-3 mb-3">
+        <div class="form-floating {% if field.field.required %}required{% endif %} col-3 mb-3">
             {{ field }}
             {{ field.label_tag }}
             {% for error in field.errors %}

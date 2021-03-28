@@ -3,12 +3,12 @@
 <title>Sign Up</title>
 {% endblock head %}
 {% block content %}
-  <form method="post" enctype="multipart/form-data" class="container-fluid">
+<form method="post" enctype="multipart/form-data" class="container-fluid">
     <h2>Sign up</h2>
     {{ form.non_field_errors }}
     {% csrf_token %}
     {% for field in form %}
-    <div class="form-floating col-3 mb-3">
+    <div class="form-floating {% if field.field.required %}required{% endif %} col-3 mb-3">
         {{ field }}
         {{ field.label_tag }}
         {% for error in field.errors %}
@@ -17,6 +17,6 @@
     </div>
     {% endfor %}
     <button class="btn btn-primary" type="submit">Sign up</button>
-  </form>
-  <p>Already have an account? <a href='{% url "assign1:login" %}'>Login</a></p>
+</form>
+<p>Already have an account? <a href='{% url "assign1:login" %}'>Login</a></p>
 {% endblock %}

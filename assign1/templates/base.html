@@ -18,6 +18,13 @@
             <a class="btn btn-primary" href='{% url "assign1:logout" %}'>Logout</a>
         {% endif %}
     </div>
+    <style type="text/css" media="screen">
+        .form-floating.required label:after {
+            content:"*";
+            color:red;
+        }
+    </style>
+
     {% block content %}
     {% endblock content %}
 
