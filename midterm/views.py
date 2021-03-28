@@ -119,6 +119,15 @@ class ChartsView(TemplateView):
         spend_by_chldrn_hshd_size = self.get_spend_by_chldrn_hshd_size(df)
         ctx['chart_data'].append(spend_by_chldrn_hshd_size)
 
+        spnd_by_yr_and_dprmnt = self.get_spend_by_year_and_store_region(df)
+        ctx['chart_data'].append(spnd_by_yr_and_dprmnt)
+
+        spnd_by_yr_and_dprmnt = self.get_spend_by_year_and_yr_lylt(df)
+        ctx['chart_data'].append(spnd_by_yr_and_dprmnt)
+
+        chart_dashboard_highlights = self.get_chart_dashboard_highlights(df)
+        ctx['chart_dashboard_highlights'] = chart_dashboard_highlights
+
         ctx['chart_data'] = json.dumps(ctx['chart_data'])
         return ctx
 
@@ -311,4 +320,92 @@ class ChartsView(TemplateView):
             },
             'canvas_id': 'id_spend_by_chldrn_hshd_size'
         }
+        return ctx
+
+    def get_spend_by_year_and_store_region(self, df):
+        dataset = df.groupby(['store_region', 'year'])['spend'].sum().reset_index().to_dict('records')
+        data = {'labels': set(), 'datasets': []}
+        for key, grp in itertools.groupby(dataset, lambda x: x['store_region']):
+            grp = list(grp)
+            grp.sort(key=lambda x: x['year'])
+            grp_data = [not data['labels'].add(x['year']) and x['spend'] for x in grp]
+            data['datasets'].append({
+                'data': grp_data,
+                'label': key.strip(),
+                'backgroundColor': next(self.COLORS_CYCLE),
+            })
+        data['labels'] = list(data['labels'])
+        ctx = {
+            'type': 'bar',
+            'data': data,
+            'options': {
+                'title': {
+                    'display': True,
+                    'text': 'SPEND by Year and Store Region'
+                },
+            },
+            'canvas_id': 'id_spnd_b_yr_str_rgn'
+        }
+        return ctx
+
+    def get_spend_by_year_and_yr_lylt(self, df):
+        dataset = df.groupby(['hshd_num__loyalty_flag', 'year'])['spend'].sum().reset_index().to_dict('records')
+        data = {'labels': set(), 'datasets': []}
+        for key, grp in itertools.groupby(dataset, lambda x: x['hshd_num__loyalty_flag']):
+            grp = list(grp)
+            grp.sort(key=lambda x: x['year'])
+            grp_data = [not data['labels'].add(x['year']) and x['spend'] for x in grp]
+            data['datasets'].append({
+                'data': grp_data,
+                'label': key.strip(),
+                'backgroundColor': next(self.COLORS_CYCLE),
+            })
+
+
+        dataset = df.groupby(['year'])['spend'].sum().reset_index().to_dict('records')
+        data['datasets'].append({
+            'label': "Spend",
+            'type': 'line',
+            'data': [x['spend'] for x in dataset],
+            'borderColor': next(self.COLORS_CYCLE),
+            'fill': False
+        })
+
+        data['labels'] = list(data['labels'])
+        ctx = {
+            'type': 'bar',
+            'data': data,
+            'options': {
+                'title': {
+                    'display': True,
+                    'text': 'SPEND by Year and Store Region'
+                },
+            },
+            'canvas_id': 'id_spend_by_year_and_yr_lylt'
+        }
+        return ctx
+
+    def get_chart_dashboard_highlights(self, df):
+        n_products = df.groupby('product_num_id').count().reset_index()['product_num_id'].count()
+        n_households = df.groupby('hshd_num_id').count().reset_index()['hshd_num_id'].count()
+        total_spend = df['spend'].sum()
+        avg_spend_per_hshd = total_spend/n_households
+        ctx = [
+            {
+                'label': 'Count of Product Number',
+                'data': int(n_products)
+            },
+            {
+                'label': 'Spend Average per Houshold',
+                'data': round(avg_spend_per_hshd, 2)
+            },
+            {
+                'label': 'Total Spend',
+                'data': round(total_spend, 2)
+            },
+            {
+                'label': 'Count of Household Number',
+                'data': int(n_households)
+            }
+        ]
         return ctx

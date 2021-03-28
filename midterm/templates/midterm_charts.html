@@ -1,4 +1,5 @@
 {% extends "midterm_index.html" %}
+{% load humanize %}
 
 {% block content %}
 {{ block.super }}
@@ -9,9 +10,34 @@ div.chart-div{
     min-height: 48vh;
     min-width: 48vw;
 }
+.card{
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+  padding: 14px;
+}
+
+.card h3{
+  font-weight: 600;
+}
 </style>
 <div id="container-fluid">
     <div class="alert alert-info" role='alert'>Click on the chart LEGENGDS/LABELS to focus on particular values</div>
+
+    <div class="container-fluid">
+        <div class="row text-center">
+        {% for highlight in chart_dashboard_highlights %}
+            <div class="col-3">
+                <div class="card">
+                    <h3>{{ highlight.data|intcomma }}</h3>
+                    <p>{{ highlight.label }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+
     <div class="chart-div"> <canvas id="id_spnd_b_yr_dprmnt" class="spend-chart"></canvas> </div>
     <div class="chart-div"> <canvas id="id_spnd_b_yr" class="spend-chart"></canvas> </div>
     <div class="chart-div"> <canvas id="id_spnd_b_marital" class="spend-chart"></canvas> </div>
@@ -19,6 +45,8 @@ div.chart-div{
     <div class="chart-div"> <canvas id="id_spend_by_marital_incm" class="spend-chart"></canvas> </div>
     <div class="chart-div"> <canvas id="id_spend_by_hshd_size" class="spend-chart"></canvas> </div>
     <div class="chart-div"> <canvas id="id_spend_by_chldrn_hshd_size" class="spend-chart"></canvas> </div>
+    <div class="chart-div"> <canvas id="id_spnd_b_yr_str_rgn" class="spend-chart"></canvas> </div>
+    <div class="chart-div"> <canvas id="id_spend_by_year_and_yr_lylt" class="spend-chart"></canvas> </div>
 </div>
 {% endblock content %}
 
