@@ -8,10 +8,15 @@
 {% block content %}
 <div class="container-fluid">
     {{ block.super }}
-    <form class="col-md-6">
+    <form class="continer">
+        {{ form.non_field_errors }}
         {% for field in search_form %}
-        <div class="form-group">
-            {{ field.label }}{{ field }}
+        <div class="form-floating col-3 mb-3">
+            {{ field }}
+            {{ field.label_tag }}
+            {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
         </div>
         {% endfor %}
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -87,7 +92,7 @@
         {% proper_paginate paginator page_obj.number 4 as custom_paginator %}
         {% for i in custom_paginator %}
             {% if page_obj.number == i %}
-                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                <li class="page-item active"><span class="page-link">{{ i }} </span></li>
             {% else %}
                 <li><a class="page-link" href="?{% url_replace request 'page' i %}">{{ i }}</a></li>
             {% endif %}

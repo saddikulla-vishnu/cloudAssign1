@@ -43,6 +43,9 @@ class DashboardView(ListView):
         if _ordering.get(order_by):
             o = [_ordering.get(order_by)]
 
+        if q and not o:
+            o = _ordering.values()
+
         qs = qs.filter(**q).order_by(*o)
         return qs
 

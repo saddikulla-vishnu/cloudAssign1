@@ -26,6 +26,12 @@ class SearchForm(forms.Form):
         required=False
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            field.widget.attrs['placeholder'] = field.label
+
 class UploadForm(forms.Form):
     hshds_file = forms.FileField(label='Upload Household Data', required=False)
     transactions_file = forms.FileField(label='Upload Transaction Data', required=False)
