@@ -82,6 +82,7 @@ class ChartsView(TemplateView):
         '#A49393', '#3CACAE', '#3A4A3D', '#C26DBC', '#EEB5EB', '#313E61', '#444444',
     ]
     COLORS_CYCLE = itertools.cycle(COLORS)
+    DATASET_LIMIT = 2_00_000
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -91,7 +92,7 @@ class ChartsView(TemplateView):
             'hshd_num__homeowner_desc', 'hshd_num__hshd_composition', 'hshd_num__hshd_size', 'hshd_num__children',
             'product_num__department', 'product_num__commodity', 'product_num__brand_type', 'product_num__natural_organic_flag',
         )
-        df = pd.DataFrame(self.queryset.select_related('hshd_num', 'product_num').values(*ALL_VALUES))
+        df = pd.DataFrame(self.queryset.select_related('hshd_num', 'product_num').values(*ALL_VALUES)[:self.DATASET_LIMIT])
         ctx['chart_data'] = []
 
         spnd_by_yr_and_dprmnt = self.get_spend_by_year_and_department(df)
