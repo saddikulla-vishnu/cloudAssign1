@@ -5,13 +5,19 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class SignUpForm(UserCreationForm):
-    user_registration_file = forms.FileField()
+    user_registration_file = forms.FileField(required=False)
 
     class Meta:
         model = User
         fields = (
             'username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'user_registration_file',
             )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            field.widget.attrs['placeholder'] = field.label
 
     def clean_user_registration_file(self):
         file = self.cleaned_data.get("user_registration_file", False)
@@ -28,3 +34,9 @@ class LoginForm(AuthenticationForm):
         fields = (
             'username', 'password',
             )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            field.widget.attrs['placeholder'] = field.label

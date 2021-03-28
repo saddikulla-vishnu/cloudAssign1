@@ -80,6 +80,8 @@ class DashboardView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         file = request.user.profile.user_registration_file
+        if not file:
+            return super().get(request, *args, **kwargs)
         text = textract.process(file.path).decode('utf-8')
         words = re.findall(r"[^\W_]+", text, re.MULTILINE)
         word_cnt = len(words)

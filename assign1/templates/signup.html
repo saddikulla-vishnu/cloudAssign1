@@ -3,17 +3,18 @@
 <title>Sign Up</title>
 {% endblock head %}
 {% block content %}
-  <h2>Sign up</h2>
-  <form method="post" enctype="multipart/form-data">
+  <form method="post" enctype="multipart/form-data" class="container-fluid">
+    <h2>Sign up</h2>
+    {{ form.non_field_errors }}
     {% csrf_token %}
     {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
+    <div class="form-floating col-3 mb-3">
         {{ field }}
+        {{ field.label_tag }}
         {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
+        <p style="color: red">{{ error }}</p>
         {% endfor %}
-      </p>
+    </div>
     {% endfor %}
     <button class="btn btn-primary" type="submit">Sign up</button>
   </form>

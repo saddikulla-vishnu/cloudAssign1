@@ -11,17 +11,18 @@
             color: red;
         }
     </style>
-    <form method="post" enctype="multipart/form-data">
-        {{ form.non_field_errors }}
+    <form method="post" enctype="multipart/form-data" class='container-fluid'>
+    <h2>Login</h2>
+    {{ form.non_field_errors }}
     {% csrf_token %}
     {% for field in form %}
-        <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% for error in field.errors %}
+        <div class="form-floating col-3 mb-3">
+            {{ field }}
+            {{ field.label_tag }}
+            {% for error in field.errors %}
             <p style="color: red">{{ error }}</p>
-        {% endfor %}
-        </p>
+            {% endfor %}
+        </div>
     {% endfor %}
     <button class="btn btn-primary" type="submit">Login</button>
     <p>Don't have an account yet? <a href='{% url "assign1:sign-up" %}'>Sign Up</a></p>

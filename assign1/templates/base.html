@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block head %}
     {% endblock head %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'frontend/css/third_party/bootstrap.min.css'%}" crossorigin="anonymous">
 </head>
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-    <div class='container-fluid'>
+    <script src="{% static 'frontend/js/third_party/Chart.bundle.min.js'%}"></script>
+    <div class='container-fluid text-center p-2 bg-dark text-white'>
         <a href="/" class="btn btn-primary col-md-1">Home</a>
         {% if not request.user.is_authenticated %}
             Click here to <a href='{% url "assign1:sign-up" %}'>Sign Up</a> | <a href='{% url "assign1:login" %}'>Login</a>

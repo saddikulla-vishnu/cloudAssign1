@@ -41,7 +41,10 @@
       <tr>
         <th scope="row">3</th>
         <td>PDF download link</td>
-        <td><a href="{{ request.user.profile.user_registration_file.url }}" target="_blank" download>{{ request.user.profile.get_user_registration_file_name }}</a></td>
+        <td>
+        {% if request.user.profile.user_registration_file %}
+            <a href="{{ request.user.profile.user_registration_file.url }}" target="_blank" download>{{ request.user.profile.get_user_registration_file_name }}</a></td>
+        {% endif %}
       </tr>
       <tr>
         <th scope="row">3</th>
