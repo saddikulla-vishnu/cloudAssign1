@@ -85,7 +85,7 @@ class ChartsView(TemplateView):
         '#A49393', '#3CACAE', '#3A4A3D', '#C26DBC', '#EEB5EB', '#313E61', '#444444',
     ]
     COLORS_CYCLE = itertools.cycle(COLORS)
-    DATASET_LIMIT = 50_000
+    DATASET_LIMIT = 1_00_000
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
